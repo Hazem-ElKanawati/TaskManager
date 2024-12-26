@@ -20,4 +20,30 @@ public class TaskService {
     {
         return taskRepository.save(task);
     }
+    public boolean updateTask(long id , Task updatedTask)
+    {
+        if(taskRepository.existsById(id))
+        {
+            taskRepository.findById(id).map(task ->
+            {
+                task.setName(updatedTask.getName());
+                task.setCompleted(updatedTask.isCompleted());
+                return taskRepository.save(task);
+            }).orElseThrow(() -> new RuntimeException("Task not found with id " + id));
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+    public boolean deleteTask(long id)
+    {
+        if(taskRepository.existsById(id))
+        {
+            taskRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
