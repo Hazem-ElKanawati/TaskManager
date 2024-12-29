@@ -1,7 +1,6 @@
 package taskmanager.com.Task.Manager.model;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
