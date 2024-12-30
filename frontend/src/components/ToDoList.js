@@ -3,74 +3,106 @@ import "./ToDoList.css";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState("");
-  const [error, setError] = useState(false);
+  const [newTask, setNewTask] = useState("");
+  const [priority, setPriority] = useState("Medium");
 
-  const handleAddTask = () => {
-    if (task.trim() === "") {
-      setError(true);
+  const addTask = () => {
+    if (!newTask.trim()) {
+      alert("Task cannot be empty!");
       return;
     }
-    setTasks([...tasks, { text: task, done: false }]);
-    setTask("");
-    setError(false);
+    const task = {
+      id: Date.now(),
+      title: newTask,
+      priority: priority,
+      status: "new",
+    };
+    setTasks([...tasks, task]);
+    setNewTask("");
+    setPriority("Medium");
   };
 
-  const handleToggleDone = (index) => {
-    const newTasks = [...tasks];
-    newTasks[index].done = !newTasks[index].done;
-    setTasks(newTasks);
+  const removeTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const handleDeleteTask = (index) => {
-    const newTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newTasks);
+  const toggleTaskStatus = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id
+          ? { ...task, status: task.status === "new" ? "done" : "new" }
+          : task
+      )
+    );
   };
 
-  const handleRefresh = () => {
-    setTasks([]);
+  const getPriorityClass = (priority) => {
+    switch (priority) {
+      case "High":
+        return "priority-high";
+      case "Medium":
+        return "priority-medium";
+      case "Low":
+        return "priority-low";
+      default:
+        return "";
+    }
   };
 
   return (
     <div className="container">
+      <div className="today">Manage Your Tasks</div>
       <div className="todo-list-section">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="✍️ Add item..."
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-        />
-        <button className="add-btn" onClick={handleAddTask}>
-          Add
-        </button>
-        <button className="refresh" onClick={handleRefresh}>
-          Refresh
-        </button>
+        <div className="add-control">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="✍️ Add item..."
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+          <select
+            className="priority-dropdown"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+          >
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <button className="add-btn" onClick={addTask}>
+            Add
+          </button>
+          <button className="refresh hidden">Refresh</button>
+        </div>
         <ul className="todo-list">
           {tasks.length === 0 && (
             <div className="no-items">No items to show</div>
           )}
-          {tasks.map((t, index) => (
+          {tasks.map((task) => (
             <li
-              key={index}
-              className={t.done ? "danger" : ""}
-              onClick={() => handleToggleDone(index)}
+              key={task.id}
+              className={`animated flipInX ${getPriorityClass(
+                task.priority
+              )} ${task.status === "done" ? "danger" : ""}`}
             >
-              {t.text}
-              <span
-                className="close"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteTask(index);
-                }}
-              >
-                ❌
-              </span>
+              <div className="checkbox">
+                <label>
+                  <span className="checkbox-mask"></span>
+                  <input
+                    type="checkbox"
+                    checked={task.status === "done"}
+                    onChange={() => toggleTaskStatus(task.id)}
+                  />
+                  {task.title} - <span>{task.priority} Priority</span>
+                </label>
+                <span className="close" onClick={() => removeTask(task.id)}>
+                  ✕
+                </span>
+              </div>
             </li>
           ))}
         </ul>
-        {error && <div className="err">Please add a valid task!</div>}
       </div>
     </div>
   );

@@ -152,6 +152,136 @@ button:hover {
     width: 90%;
   }
 }
+body {
+  background: #56baed;
+  font: 14px "Nunito", sans-serif;
+}
+
+.today {
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.add-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.priority-dropdown {
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.add-btn,
+.refresh-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-btn {
+  background: #56baed;
+}
+
+.add-btn:hover {
+  background: #39ace7;
+}
+
+.refresh-btn {
+  background: #f1c40f;
+}
+
+.refresh-btn:hover {
+  background: #e1b20d;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  background: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.priority-high {
+  border-left: 5px solid #e74c3c;
+}
+
+.priority-medium {
+  border-left: 5px solid #f1c40f;
+}
+
+.priority-low {
+  border-left: 5px solid #2ecc71;
+}
+
+.danger {
+  background: rgb(85, 41, 220);
+  color: #fff;
+}
+
+.danger label {
+  text-decoration: line-through;
+}
+
+.close {
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.close:hover {
+  color: #e74c3c;
+}
+
+.no-items {
+  text-align: center;
+  color: #aaa;
+  margin-top: 20px;
+}
+.add-control {
+  display: flex;
+  flex-direction: column; /* Stack the elements vertically */
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 10px;
+}
 
 @media (max-width: 680px) {
   svg {
