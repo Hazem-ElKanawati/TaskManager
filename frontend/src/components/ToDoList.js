@@ -94,7 +94,7 @@ function ToDoList() {
                     checked={task.status === "done"}
                     onChange={() => toggleTaskStatus(task.id)}
                   />
-                  {task.title} - <span>{task.priority} Priority</span>
+                  {task.title} - <span><i>{task.priority} Priority</i></span>
                 </label>
                 <span className="close" onClick={() => removeTask(task.id)}>
                   ✕
