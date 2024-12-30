@@ -11,13 +11,28 @@ body {
   margin-top: 20px;
 }
 
-/* Container */
 .container {
-  padding-top: 75px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 70%; /* Adjust width to stretch more horizontally */
+  max-width: 1000px; /* Maintain a limit for large screens */
+  min-height: 500px;
+  margin: auto;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+}
+.n {
+  color: white;
+  background-color: transparent; /* Optional: Ensures the background doesn't affect the text */
+  font-size: 16px; /* Adjust size if necessary */
+  text-align: center; /* Optional: Center-aligns the text */
+  overflow-wrap: break-word; /* Ensures long text wraps to the next line */
+  padding: 10px; /* Adds some spacing around the text */
 }
 
 /* To-Do List Section */
@@ -142,7 +157,7 @@ button:hover {
   height: 12px;
   border-radius: 2.5px;
   position: absolute;
-  margin-left: -20px;
+  margin-left: -10px;
   margin-top: 4px;
 }
 
@@ -159,9 +174,58 @@ body {
 
 .today {
   text-align: center;
-  color: #fff;
+  color: #888;
   font-size: 22px;
   margin-bottom: 20px;
+}
+.welcome {
+  color: black; /* Makes the text color white */
+  font-size: 25px; /* Adjust the font size as needed */
+  font-weight: no; /* Makes the text bold */
+  text-align: center; /* Centers the text horizontally */
+  margin-top: 20px; /* Adds spacing above the welcome message */
+  margin-bottom: 10px; /* Adds spacing below the welcome message */
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for better visibility */
+}
+.clear-btn {
+  background-color: #ffa500; /* Same orange color as Refresh */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.date {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #444;
+}
+
+.clear-btn:hover {
+  background-color: #e59400; /* Slightly darker orange on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+}
+
+.clear-btn:active {
+  transform: scale(0.95); /* Button shrinks slightly on click */
+}
+
+.n {
+  color: white; /* Text remains white */
+  background-color: rgba(255, 255, 255, 0.1); /* Adds a light white background for visibility */
+  width: 90%; /* Adjust the width to fit the desired margins */
+  max-width: 1200px; /* Optional: Set a maximum width */
+  margin: 20px auto; /* Centers the div horizontally and adds vertical spacing */
+  padding: 10px; /* Adds inner spacing */
+  text-align: center; /* Centers the text inside the box */
+  border-radius: 10px; /* Rounds the corners slightly */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border for visibility */
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
 }
 
 .add-control {

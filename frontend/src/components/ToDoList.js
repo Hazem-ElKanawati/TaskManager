@@ -1,10 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ToDoList.css";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [priority, setPriority] = useState("Medium");
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    // Get today's date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    setCurrentDate(formattedDate);
+  }, []);
 
   const addTask = () => {
     if (!newTask.trim()) {
@@ -24,6 +37,10 @@ function ToDoList() {
 
   const removeTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const clearAllTasks = () => {
+    setTasks([]);
   };
 
   const toggleTaskStatus = (id) => {
@@ -51,7 +68,8 @@ function ToDoList() {
 
   return (
     <div className="container">
-      <div className="today">Manage Your Tasks</div>
+      <div className="welcome">Welcome John Doe!</div>
+      <div className="date">Today is {currentDate}</div>
       <div className="todo-list-section">
         <div className="add-control">
           <input
@@ -73,7 +91,9 @@ function ToDoList() {
           <button className="add-btn" onClick={addTask}>
             Add
           </button>
-          <button className="refresh hidden">Refresh</button>
+          <button className="clear-btn" onClick={clearAllTasks}>
+            Clear
+          </button>
         </div>
         <ul className="todo-list">
           {tasks.length === 0 && (
@@ -94,7 +114,7 @@ function ToDoList() {
                     checked={task.status === "done"}
                     onChange={() => toggleTaskStatus(task.id)}
                   />
-                  {task.title} - <span><i>{task.priority} Priority</i></span>
+                  {task.title} - <span>{task.priority} Priority</span>
                 </label>
                 <span className="close" onClick={() => removeTask(task.id)}>
                   ✕
