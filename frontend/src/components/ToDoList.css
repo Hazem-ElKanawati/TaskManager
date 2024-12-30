@@ -1,0 +1,161 @@
+/* General Styles */
+body {
+  background: #56baed;
+  font: 14px "Nunito", sans-serif;
+}
+
+.today {
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 20px;
+}
+
+/* Container */
+.container {
+  padding-top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* To-Do List Section */
+.todo-list-section {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Input Field */
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #56baed;
+  outline: none;
+  box-shadow: 0 0 8px rgba(86, 186, 237, 0.5);
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background: #56baed;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #39ace7;
+}
+
+.add-btn {
+  background: #56baed;
+}
+
+.refresh {
+  background: #f39c12;
+}
+
+.refresh:hover {
+  background: #e67e22;
+}
+
+/* To-Do List Items */
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  word-break: break-word;
+}
+
+.todo-list li.danger {
+  background: rgb(85, 41, 220);
+  color: #fff;
+  text-decoration: line-through;
+}
+
+.todo-list li.danger label {
+  text-decoration: line-through;
+  color: #fff;
+}
+
+/* Close Button */
+.todo-list li .close {
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+}
+
+.todo-list li .close:hover {
+  color: #e74c3c;
+}
+
+/* Error and No Items Message */
+.err {
+  color: #e74c3c;
+  margin-top: 10px;
+  font-size: 14px;
+  display: none;
+}
+
+.no-items {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #999;
+}
+
+/* Checkbox */
+.todo-list li label input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.todo-list li label .checkbox-mask {
+  display: block;
+  border: 2px solid #666;
+  width: 12px;
+  height: 12px;
+  border-radius: 2.5px;
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 4px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .todo-list-section {
+    width: 90%;
+  }
+}
+
+@media (max-width: 680px) {
+  svg {
+    width: 70px;
+    height: 70px;
+  }
+}
