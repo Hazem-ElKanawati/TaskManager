@@ -48,4 +48,9 @@ public class CategoryController {
     {
         categoryService.deleteCategory(id);
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Category>> getUserCategories(@PathVariable Long userId) {
+        List<Category> categories = categoryService.getUserCategories(userId);
+        return ResponseEntity.ok(categories);
+    }
 }

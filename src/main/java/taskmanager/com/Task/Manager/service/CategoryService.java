@@ -53,7 +53,9 @@ public class CategoryService {
             return true;
         }).orElse(false);
     }
-
+    public List<Category> getUserCategories(Long userId) {
+        return categoryRepository.findByUserId(userId);
+    }
     public void deleteCategory(Long id)
     {
         categoryRepository.deleteById(id);
