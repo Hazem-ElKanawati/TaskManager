@@ -6,6 +6,7 @@ import taskmanager.com.Task.Manager.model.Task;
 import taskmanager.com.Task.Manager.repository.TaskRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -46,4 +47,16 @@ public class TaskService {
             return false;
         }
     }
+    public boolean toggleTaskCompletion(long id) {
+        Optional<Task> taskOptional = taskRepository.findById(id);
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            task.setCompleted(!task.isCompleted());
+            taskRepository.save(task);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

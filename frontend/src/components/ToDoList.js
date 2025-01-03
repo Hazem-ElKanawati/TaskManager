@@ -1,177 +1,285 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "./ToDoList.css";
 
 function ToDoList() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState("");
-  const [currentTab, setCurrentTab] = useState("All");
-  const [tabs, setTabs] = useState(["All", "Active", "Completed"]);
-  const [newTab, setNewTab] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
+  const [newTaskByCategory, setNewTaskByCategory] = useState({});
+  const [error, setError] = useState("");
+  const userId = localStorage.getItem("userId");
 
-  // Simulated username (replace with backend value)
-  const username = "Abdelrhaman";
+  useEffect(() => {
+    if (!userId) {
+      setError("User ID not found. Please log in again.");
+      return;
+    }
 
-  const addTask = (e) => {
-    e.preventDefault();
-    if (!newTask.trim()) {
+    const fetchUserCategories = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/categories/user/${userId}`);
+        if (response.ok) {
+          const data = await response.json();
+          const normalizedData = data.map((category) => ({
+            ...category,
+            tasks: category.tasks || [],
+          }));
+          setCategories(normalizedData);
+        } else {
+          const errorMsg = await response.text();
+          setError(errorMsg || "Failed to fetch categories.");
+        }
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+        setError("Something went wrong while fetching categories.");
+      }
+    };
+
+    fetchUserCategories();
+  }, [userId]);
+
+  const addCategory = async () => {
+    if (!newCategory.trim()) {
+      alert("Category name cannot be empty!");
+      return;
+    }
+
+    const category = {
+      name: newCategory,
+      description: "Default description",
+      user: { id: parseInt(userId, 10) },
+    };
+
+    try {
+      const response = await fetch(`http://localhost:8080/categories`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(category),
+      });
+
+      if (response.ok) {
+        const newCat = await response.json();
+        setCategories((prevCategories) => [
+          ...prevCategories,
+          { ...newCat, tasks: [] },
+        ]);
+        setNewCategory("");
+      } else {
+        const errorMsg = await response.text();
+        setError(errorMsg || "Failed to add category.");
+      }
+    } catch (err) {
+      console.error("Error adding category:", err);
+      setError("Something went wrong while adding the category.");
+    }
+  };
+
+  const removeCategory = async (categoryId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/categories/${categoryId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setCategories((prevCategories) =>
+          prevCategories.filter((category) => category.id !== categoryId)
+        );
+      } else {
+        const errorMsg = await response.text();
+        setError(errorMsg || "Failed to remove category.");
+      }
+    } catch (err) {
+      console.error("Error removing category:", err);
+      setError("Something went wrong while removing the category.");
+    }
+  };
+
+  const addTask = async (categoryId) => {
+    const newTask = newTaskByCategory[categoryId];
+    if (!newTask?.trim()) {
       alert("Task cannot be empty!");
       return;
     }
-    const task = {
-      id: Date.now(),
-      title: newTask,
-      completed: false,
-    };
-    setTasks([...tasks, task]);
-    setNewTask("");
-  };
 
-  const toggleTaskStatus = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
+    const task = { name: newTask, completed: false, category: { id: categoryId } };
 
-  const removeTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
+    try {
+      const response = await fetch(`http://localhost:8080/tasks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+      });
 
-  const removeTab = (tabToRemove) => {
-    if (["All", "Active", "Completed"].includes(tabToRemove)) {
-      alert("Default tabs cannot be deleted.");
-      return;
-    }
-    setTabs(tabs.filter((tab) => tab !== tabToRemove));
-    if (currentTab === tabToRemove) {
-      setCurrentTab("All");
+      if (response.ok) {
+        const newTaskData = await response.json();
+        setCategories((prevCategories) =>
+          prevCategories.map((category) =>
+            category.id === categoryId
+              ? { ...category, tasks: [...(category.tasks || []), newTaskData] }
+              : category
+          )
+        );
+        setNewTaskByCategory((prev) => ({ ...prev, [categoryId]: "" }));
+      } else {
+        const errorMsg = await response.text();
+        setError(errorMsg || "Failed to add task.");
+      }
+    } catch (err) {
+      console.error("Error adding task:", err);
+      setError("Something went wrong while adding the task.");
     }
   };
 
-  const filteredTasks = tasks.filter((task) => {
-    if (currentTab === "Active") return !task.completed;
-    if (currentTab === "Completed") return task.completed;
-    return true;
-  });
+  const removeTask = async (categoryId, taskId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/tasks/${taskId}`, {
+        method: "DELETE",
+      });
 
-  const addNewTab = () => {
-    if (newTab && !tabs.includes(newTab)) {
-      setTabs([...tabs, newTab]);
-      setNewTab("");
-    } else {
-      alert("Tab already exists or empty");
+      if (response.ok) {
+        setCategories((prevCategories) =>
+          prevCategories.map((category) =>
+            category.id === categoryId
+              ? {
+                  ...category,
+                  tasks: (category.tasks || []).filter((task) => task.id !== taskId),
+                }
+              : category
+          )
+        );
+      } else {
+        const errorMsg = await response.text();
+        setError(errorMsg || "Failed to remove task.");
+      }
+    } catch (err) {
+      console.error("Error removing task:", err);
+      setError("Something went wrong while removing the task.");
+    }
+  };
+
+  const toggleTaskStatus = async (taskId, categoryId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/tasks/${taskId}/toggle`, {
+        method: "PUT",
+      });
+
+      if (response.ok) {
+        setCategories((prevCategories) =>
+          prevCategories.map((category) =>
+            category.id === categoryId
+              ? {
+                  ...category,
+                  tasks: category.tasks.map((task) =>
+                    task.id === taskId
+                      ? { ...task, completed: !task.completed }
+                      : task
+                  ),
+                }
+              : category
+          )
+        );
+      } else {
+        const errorMsg = await response.text();
+        setError(errorMsg || "Failed to toggle task status.");
+      }
+    } catch (err) {
+      console.error("Error toggling task status:", err);
+      setError("Something went wrong while toggling task status.");
     }
   };
 
   return (
     <section className="vh-100 gradient-custom">
       <div className="container-fluid d-flex flex-column h-100">
-        {/* Fancy Welcome Section */}
         <header className="row">
           <div className="col-12 py-4 text-center fancy-welcome">
-            <h1>
-              Welcome, <span className="username">{username}</span>!
-            </h1>
+            <h1>Task Manager</h1>
           </div>
         </header>
 
-        {/* Main Content Section */}
         <div className="row flex-grow-1 d-flex justify-content-center align-items-center">
           <div className="col col-xl-8">
             <div className="card">
               <div className="card-body p-5">
-                <form
-                  className="d-flex justify-content-center align-items-center mb-4"
-                  onSubmit={addTask}
-                >
-                  <div className="form-outline flex-fill">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={newTask}
-                      onChange={(e) => setNewTask(e.target.value)}
-                    />
-                    <label className="form-label">New task...</label>
-                  </div>
-                  <button type="submit" className="btn btn-info ms-2">
-                    Add
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    className="form-control mb-2"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="New category name"
+                  />
+                  <button className="btn btn-primary" onClick={addCategory}>
+                    Add Category
                   </button>
-                </form>
+                </div>
 
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <ul className="nav nav-tabs" id="ex1" role="tablist">
-                    {tabs.map((tab) => (
-                      <li className="nav-item d-flex align-items-center" key={tab}>
-                        <button
-                          className={`nav-link ${currentTab === tab ? "active" : ""}`}
-                          onClick={() => setCurrentTab(tab)}
+                {categories.map((category) => (
+                  <div key={category.id} className="mb-4">
+                    <h4>
+                      {category.name}
+                      <button
+                        className="btn btn-danger btn-sm ms-2"
+                        onClick={() => removeCategory(category.id)}
+                      >
+                        Delete
+                      </button>
+                    </h4>
+                    <ul className="list-group mb-3">
+                      {(category.tasks || []).map((task) => (
+                        <li
+                          key={task.id}
+                          className="list-group-item d-flex justify-content-between align-items-center"
                         >
-                          {tab}
-                        </button>
-                        {tab !== "All" && tab !== "Active" && tab !== "Completed" && (
+                          <input
+                            type="checkbox"
+                            className="form-check-input me-2"
+                            checked={task.completed}
+                            onChange={() => toggleTaskStatus(task.id, category.id)}
+                          />
+                          <span
+                            style={{
+                              textDecoration: task.completed ? "line-through" : "none",
+                            }}
+                          >
+                            {task.name}
+                          </span>
                           <button
-                            className="btn btn-close ms-2"
-                            onClick={() => removeTab(tab)}
-                          ></button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="d-flex align-items-center gap-2">
+                            className="btn btn-danger btn-sm"
+                            onClick={() => removeTask(category.id, task.id)}
+                          >
+                            Delete
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
                     <input
                       type="text"
-                      className="form-control me-2"
-                      value={newTab}
-                      onChange={(e) => setNewTab(e.target.value)}
-                      placeholder="New category"
+                      className="form-control mb-2"
+                      value={newTaskByCategory[category.id] || ""}
+                      onChange={(e) =>
+                        setNewTaskByCategory((prev) => ({
+                          ...prev,
+                          [category.id]: e.target.value,
+                        }))
+                      }
+                      placeholder="New task name"
                     />
-                    <button className="btn btn-primary btn-sm" onClick={addNewTab}>
-                      + Add Category
+                    <button
+                      className="btn btn-info"
+                      onClick={() => addTask(category.id)}
+                    >
+                      Add Task
                     </button>
                   </div>
-                </div>
-
-                <div className="tab-content" id="ex1-content">
-                  <ul className="list-group mb-0">
-                    {filteredTasks.map((task) => (
-                      <li
-                        key={task.id}
-                        className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-                        style={{ backgroundColor: "#f4f6f7" }}
-                      >
-                        <input
-                          className="form-check-input me-2"
-                          type="checkbox"
-                          checked={task.completed}
-                          onChange={() => toggleTaskStatus(task.id)}
-                        />
-                        <span
-                          style={{
-                            textDecoration: task.completed ? "line-through" : "none",
-                          }}
-                        >
-                          {task.title}
-                        </span>
-                        <button
-                          className="btn btn-danger btn-sm ms-auto"
-                          onClick={() => removeTask(task.id)}
-                        >
-                          Delete
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Footer Section */}
         <footer className="footer">
           <p>© 2025 Task Manager. All Rights Reserved.</p>
         </footer>

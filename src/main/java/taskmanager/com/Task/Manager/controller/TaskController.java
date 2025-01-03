@@ -39,6 +39,18 @@ public class TaskController {
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task with id " + id + " does not exist");
        }
     }
+    @PutMapping("/{id}/toggle")
+    public ResponseEntity<String> toggleTaskCompletion(@PathVariable long id) {
+        boolean isUpdated = taskService.toggleTaskCompletion(id);
+
+        if (isUpdated) {
+            return ResponseEntity.ok("Task with id " + id + " was toggled successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task with id " + id + " does not exist");
+        }
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable long id)
     {

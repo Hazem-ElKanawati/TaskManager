@@ -15,7 +15,7 @@ function Login() {
     }
 
     const user = { username, password };
-    console.log(JSON.stringify())
+
     try {
       const response = await fetch("http://localhost:8080/users/login", {
         method: "POST",
@@ -23,16 +23,15 @@ function Login() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
-
       });
 
       if (response.ok) {
-        // Successful login
-        navigate("/todolist");
+        const userId = await response.text(); // Get user ID from the response
+        localStorage.setItem("userId", userId); // Store user ID in localStorage
+        navigate("/todolist"); // Navigate to the ToDoList page
       } else {
-        // Handle login failure
         const message = await response.text();
-        setError(message);
+        setError(message || "Invalid credentials.");
       }
     } catch (err) {
       console.error("Error during login:", err);

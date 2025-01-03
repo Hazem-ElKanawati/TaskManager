@@ -7,7 +7,6 @@ import taskmanager.com.Task.Manager.model.Task;
 import taskmanager.com.Task.Manager.repository.CategoryRepository;
 import taskmanager.com.Task.Manager.repository.TaskRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -24,12 +23,17 @@ public class CategoryService {
     {
         return categoryRepository.findById(id);
     }
-    public Category saveCategory(Category category)
-    {
-        List<Task> Tasks = category.getTasks().stream().map(task -> taskRepository.findById(task.getId()).orElseThrow(() -> new RuntimeException("Task not found with ID" + task.getId()))).toList();
-        category.setTasks(Tasks);
+    public Category saveCategory(Category category) {
+        if (category.getTasks() != null && !category.getTasks().isEmpty()) {
+            List<Task> tasks = category.getTasks().stream()
+                    .map(task -> taskRepository.findById(task.getId())
+                            .orElseThrow(() -> new RuntimeException("Task not found with ID " + task.getId())))
+                    .toList();
+            category.setTasks(tasks);
+        }
         return categoryRepository.save(category);
     }
+
 
     public boolean updateCategory(long id, Category updatedCategory) {
         return categoryRepository.findById(id).map(category -> {

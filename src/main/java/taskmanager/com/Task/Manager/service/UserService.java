@@ -36,4 +36,9 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    public Long findByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.get().getId();
+    }
 }

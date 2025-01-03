@@ -25,7 +25,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody User user) {
         boolean success = userService.loginUser(user.getUsername(), user.getPassword());
         if (success) {
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok(Long.toString(userService.findByUsername(user.getUsername())));
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
