@@ -1,0 +1,355 @@
+/* General Styles */
+body {
+  background: #56baed;
+  font: 14px "Nunito", sans-serif;
+}
+
+.today {
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 20px;
+}
+
+.container {
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 70%; /* Adjust width to stretch more horizontally */
+  max-width: 1000px; /* Maintain a limit for large screens */
+  min-height: 500px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.n {
+  color: white;
+  background-color: transparent; /* Optional: Ensures the background doesn't affect the text */
+  font-size: 16px; /* Adjust size if necessary */
+  text-align: center; /* Optional: Center-aligns the text */
+  overflow-wrap: break-word; /* Ensures long text wraps to the next line */
+  padding: 10px; /* Adds some spacing around the text */
+}
+
+/* To-Do List Section */
+.todo-list-section {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Input Field */
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #56baed;
+  outline: none;
+  box-shadow: 0 0 8px rgba(86, 186, 237, 0.5);
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background: #56baed;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #39ace7;
+}
+
+.add-btn {
+  background: #56baed;
+}
+
+.refresh {
+  background: #f39c12;
+}
+
+.refresh:hover {
+  background: #e67e22;
+}
+
+/* To-Do List Items */
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  word-break: break-word;
+}
+
+.todo-list li.danger {
+  background: rgb(85, 41, 220);
+  color: #fff;
+  text-decoration: line-through;
+}
+
+.todo-list li.danger label {
+  text-decoration: line-through;
+  color: #fff;
+}
+
+/* Close Button */
+.todo-list li .close {
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+}
+
+.todo-list li .close:hover {
+  color: #e74c3c;
+}
+
+/* Error and No Items Message */
+.err {
+  color: #e74c3c;
+  margin-top: 10px;
+  font-size: 14px;
+  display: none;
+}
+
+.no-items {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #999;
+}
+
+/* Checkbox */
+.todo-list li label input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.todo-list li label .checkbox-mask {
+  display: block;
+  border: 2px solid #666;
+  width: 12px;
+  height: 12px;
+  border-radius: 2.5px;
+  position: absolute;
+  margin-left: -10px;
+  margin-top: 4px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .todo-list-section {
+    width: 90%;
+  }
+}
+body {
+  background: #56baed;
+  font: 14px "Nunito", sans-serif;
+}
+
+.today {
+  text-align: center;
+  color: #888;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.welcome {
+  color: black; /* Makes the text color white */
+  font-size: 25px; /* Adjust the font size as needed */
+  font-weight: no; /* Makes the text bold */
+  text-align: center; /* Centers the text horizontally */
+  margin-top: 20px; /* Adds spacing above the welcome message */
+  margin-bottom: 10px; /* Adds spacing below the welcome message */
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for better visibility */
+}
+.clear-btn {
+  background-color: #ffa500; /* Same orange color as Refresh */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.date {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #444;
+}
+
+.clear-btn:hover {
+  background-color: #e59400; /* Slightly darker orange on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+}
+
+.clear-btn:active {
+  transform: scale(0.95); /* Button shrinks slightly on click */
+}
+
+.n {
+  color: white; /* Text remains white */
+  background-color: rgba(255, 255, 255, 0.1); /* Adds a light white background for visibility */
+  width: 90%; /* Adjust the width to fit the desired margins */
+  max-width: 1200px; /* Optional: Set a maximum width */
+  margin: 20px auto; /* Centers the div horizontally and adds vertical spacing */
+  padding: 10px; /* Adds inner spacing */
+  text-align: center; /* Centers the text inside the box */
+  border-radius: 10px; /* Rounds the corners slightly */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border for visibility */
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+}
+
+.add-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.priority-dropdown {
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.add-btn,
+.refresh-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-btn {
+  background: #56baed;
+}
+
+.add-btn:hover {
+  background: #39ace7;
+}
+
+.refresh-btn {
+  background: #f1c40f;
+}
+
+.refresh-btn:hover {
+  background: #e1b20d;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  background: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.priority-high {
+  border-left: 5px solid #e74c3c;
+}
+
+.priority-medium {
+  border-left: 5px solid #f1c40f;
+}
+
+.priority-low {
+  border-left: 5px solid #2ecc71;
+}
+
+.danger {
+  background: rgb(85, 41, 220);
+  color: #fff;
+}
+
+.danger label {
+  text-decoration: line-through;
+}
+
+.close {
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.close:hover {
+  color: #e74c3c;
+}
+
+.no-items {
+  text-align: center;
+  color: #aaa;
+  margin-top: 20px;
+}
+.add-control {
+  display: flex;
+  flex-direction: column; /* Stack the elements vertically */
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 10px;
+}
+
+@media (max-width: 680px) {
+  svg {
+    width: 70px;
+    height: 70px;
+  }
+}
