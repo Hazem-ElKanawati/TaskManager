@@ -30,25 +30,25 @@ Ensure you have the following installed on your system:
    ```bash
    git clone https://github.com/Hazem-ElKanawati/TaskManager.git  
    cd TaskManager
-
+   ```
 ## 2. Set up the backend by navigating to the root directory of the project. Run the following command to start the Spring Boot application:
    ```bash
-   ./mvnw spring-boot:run  
-   ` ``` `
+   ./mvnw spring-boot:run
+  ```
    This will initiate the backend API service, connecting to the H2 in-memory database by default. The backend will be available at http://localhost:8080.  
 
-## 3. Install and run the frontend by moving into the frontend directory:  
+  ## 3. Install and run the frontend by moving into the frontend directory:  
    ```bash
    cd frontend  
-   ` ``` `
+    ```
    Install the required dependencies by running:  
    ```bash
    npm install  
-   ` ``` `
+  ```
    After the installation completes, start the development server:  
    ```bash
    npm start  
-   ` ``` `
+   ```
    This launches the frontend, which can be accessed at http://localhost:3000. The frontend will communicate with the backend running on port 8080.  
 
 ## Usage
