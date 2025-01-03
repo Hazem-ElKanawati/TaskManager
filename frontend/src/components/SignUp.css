@@ -1,51 +1,32 @@
 /* BASIC */
 
 html {
-  background-color: #56baed;
+  background-color: #03f0fc !important; /* Overrides Bootstrap's body background */
 }
 
 body {
-  font-family: "Poppins", sans-serif;
-  height: 100vh;
-  margin: 0;
+  font-family: "Poppins", sans-serif !important;
+  background-color: #03f0fc !important; /* Force your background color */
 }
 
-a {
-  color: #92badd;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 400;
+input[type="text"],
+input[type="password"] {
+  background-color: #f6f6f6 !important; /* Force input field background */
+  color: #0d0d0d !important;
+  border: 2px solid #ddd !important;
 }
 
-h2 {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* STRUCTURE */
-
-.wrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  min-height: 100vh;
-  padding: 20px;
+input[type="submit"],
+input[type="button"] {
+  background-color: #56baed !important; /* Force button background */
+  color: white !important;
 }
 
 #formContent {
-  border-radius: 10px;
-  background: #fff;
-  padding: 30px;
-  width: 90%;
-  max-width: 450px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-  text-align: center;
+  background-color: #fff !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
+
 
 #formFooter {
   background-color: #f6f6f6;

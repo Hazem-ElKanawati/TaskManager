@@ -3,8 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "./ToDoList.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
@@ -12,6 +10,9 @@ function ToDoList() {
   const [currentTab, setCurrentTab] = useState("All");
   const [tabs, setTabs] = useState(["All", "Active", "Completed"]);
   const [newTab, setNewTab] = useState("");
+
+  // Simulated username (replace with backend value)
+  const username = "Abdelrhaman";
 
   const addTask = (e) => {
     e.preventDefault();
@@ -41,7 +42,7 @@ function ToDoList() {
   };
 
   const removeTab = (tabToRemove) => {
-    if (tabToRemove === "All" || tabToRemove === "Active" || tabToRemove === "Completed") {
+    if (["All", "Active", "Completed"].includes(tabToRemove)) {
       alert("Default tabs cannot be deleted.");
       return;
     }
@@ -68,9 +69,19 @@ function ToDoList() {
 
   return (
     <section className="vh-100 gradient-custom">
-      <div className="container py-5 h-100">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col col-xl-10">
+      <div className="container-fluid d-flex flex-column h-100">
+        {/* Fancy Welcome Section */}
+        <header className="row">
+          <div className="col-12 py-4 text-center fancy-welcome">
+            <h1>
+              Welcome, <span className="username">{username}</span>!
+            </h1>
+          </div>
+        </header>
+
+        {/* Main Content Section */}
+        <div className="row flex-grow-1 d-flex justify-content-center align-items-center">
+          <div className="col col-xl-8">
             <div className="card">
               <div className="card-body p-5">
                 <form
@@ -96,7 +107,7 @@ function ToDoList() {
                     {tabs.map((tab) => (
                       <li className="nav-item d-flex align-items-center" key={tab}>
                         <button
-                          className={`nav-link ${currentTab === tab ? 'active' : ''}`}
+                          className={`nav-link ${currentTab === tab ? "active" : ""}`}
                           onClick={() => setCurrentTab(tab)}
                         >
                           {tab}
@@ -110,7 +121,7 @@ function ToDoList() {
                       </li>
                     ))}
                   </ul>
-                  <div className="d-flex justify-content-center">
+                  <div className="d-flex align-items-center gap-2">
                     <input
                       type="text"
                       className="form-control me-2"
@@ -118,7 +129,7 @@ function ToDoList() {
                       onChange={(e) => setNewTab(e.target.value)}
                       placeholder="New category"
                     />
-                    <button className="btn btn-primary" onClick={addNewTab}>
+                    <button className="btn btn-primary btn-sm" onClick={addNewTab}>
                       + Add Category
                     </button>
                   </div>
@@ -140,9 +151,7 @@ function ToDoList() {
                         />
                         <span
                           style={{
-                            textDecoration: task.completed
-                              ? "line-through"
-                              : "none",
+                            textDecoration: task.completed ? "line-through" : "none",
                           }}
                         >
                           {task.title}
@@ -161,11 +170,14 @@ function ToDoList() {
             </div>
           </div>
         </div>
+
+        {/* Footer Section */}
+        <footer className="footer">
+          <p>© 2025 Task Manager. All Rights Reserved.</p>
+        </footer>
       </div>
     </section>
   );
 }
 
 export default ToDoList;
-
-

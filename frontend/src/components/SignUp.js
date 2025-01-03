@@ -16,22 +16,16 @@ function SignUp() {
             id="name"
             className="fadeIn second"
             name="name"
-            placeholder="Full Name"
+            placeholder="Username"
           />
           <input
-            type="email"
-            id="email"
+            type="password"
+            id="password"
             className="fadeIn third"
-            name="email"
-            placeholder="Email"
+            name="password"
+            placeholder="Password"
           />
-          <input
-            type="text"
-            id="phone"
-            className="fadeIn third"
-            name="phone"
-            placeholder="Phone Number"
-          />
+
           <input
             type="submit"
             className="fadeIn fourth"

@@ -23,6 +23,12 @@ body {
   width: 100%;
   min-height: 100%;
 }
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
 
 #formContent {
   background: #fff;
